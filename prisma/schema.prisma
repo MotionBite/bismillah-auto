@@ -1,0 +1,31 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Product {
+  id              String   @id @default(cuid())
+  name            String
+  shortName       String?
+  price           Float
+  originalPrice   Float?
+  currency        String   @default("BDT")
+  sku             String?
+  brand           String?
+  warranty        String?
+  installation    String?
+  images          Json     // Array of objects {url, alt, title}
+  description     String
+  longDescription String?
+  keyFeatures     Json     // Array of objects {title, description, icon}
+  features        String[] @default([])
+  specifications  Json     // Object {build: [], power: [], connectivity: [], cost: []}
+  faqs            Json     // Array of objects {question, answer}
+  inStock         Boolean  @default(true)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
